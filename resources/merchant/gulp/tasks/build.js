@@ -1,0 +1,1 @@
+exports.dependencies = ['build-js', 'build-scss', 'build-html', 'build-loopback'];

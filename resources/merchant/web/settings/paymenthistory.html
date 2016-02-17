@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Payment history</h3>
+  </div>
+  <div class="panel-body">
+  	<table class="table table-bordered">
+      <tr ng-if="items.length > 0" ng-repeat="item in items">
+          <td>{{item.id}}</td>
+          <td>{{item.amount}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.created}}</td>
+      </tr>
+      <tr ng-if="items.length <= 0">
+          <td colspan="3" class="text-center">Could not find data</td>
+      </tr>
+    </table>
+  </div>
+</div>

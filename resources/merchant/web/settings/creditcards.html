@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Credit cards</h3>
+  </div>
+  <div class="panel-body">
+  	<table class="table table-bordered">
+      <tr ng-if="cards.length > 0" ng-repeat="card in cards">
+          <td>{{card.brand}}</td>
+          <td>{{card.exp_month}}/{{card.exp_year}}</td>
+          <td>****{{card.last4}}</td>
+          <td>
+              <a href="javascript:void(0)" ng-click="edit(card)">Edit</a>
+              <a href="javascript:void(0)" ng-click="remove(card)" confirm="Are you sure delete, {{card.brand}}?">Delete</a>
+          </td>
+      </tr>
+      <tr ng-if="cards.length <= 0">
+          <td colspan="4" class="text-center">Could not find data</td>
+      </tr>
+    </table>
+  </div>
+  <div class="panel-footer">
+  	<a href="javascript:void(0)" class="show" ng-click="add()">+ Add card</a>
+  </div>
+</div>
