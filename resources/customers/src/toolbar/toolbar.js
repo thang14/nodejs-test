@@ -75,7 +75,11 @@ function LoginDialogCtrl($scope, $uibModal, $auth, toast, $uibModalInstance, $st
     }
     
     $scope.authenticate = function(provider) {
-      window.location = '/auth/'+ provider;
+      $auth.authenticate(provider).then(function(res) {
+        Account.load();
+        $scope.cancel();
+      });
+      
     }
       
 		$scope.cancel = function() {

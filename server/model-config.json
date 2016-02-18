@@ -26,6 +26,9 @@
     "dataSource": "db",
     "public": false
   },
+  "Email": {
+    "dataSource": "Email"
+  },
   "RoleMapping": {
     "dataSource": "db",
     "public": false

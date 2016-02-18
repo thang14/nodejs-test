@@ -86,14 +86,8 @@ angular.module('app.account', [
 
 
 
-function Account(User, $auth, $cookies, $uibModal) {
+function Account(User, $auth, $uibModal) {
 	var ret = {};
-
-	// set token
-	var access_token= $cookies.get('access_token');
-	if(access_token){
-		$auth.setToken(access_token);
-	}
 
   // This function reloads the currently logged in user
   ret.load = function() {
@@ -131,16 +125,16 @@ function Account(User, $auth, $cookies, $uibModal) {
 
   // User logout
   ret.logout = function() {
-  	$cookies.remove('access_token');
-  	User.logout();
-  	$auth.logout();
+  	User.logout().$promise.then(function(res) {
+      $auth.logout();
+    });
   }
 
   ret.load();
 
   return ret;
 }
-Account.$inject = ["User", "$auth", "$cookies", "$uibModal"];
+Account.$inject = ["User", "$auth", "$uibModal"];
 
 
 function RealmDialog($scope, user, $uibModalInstance, User) {
@@ -173,7 +167,8 @@ angular.module('app.auth', [
 
     $authProvider.facebook({
       url: '/auth/facebook/callback',
-      clientId: 1115887685128080
+      clientId: 1115887685128080,
+      redirectUri: window.location.origin + '/',
     });
   }]);
     
@@ -198,18 +193,6 @@ function Card($resource) {
 }
 Card.$inject = ["$resource"];
 
-})();
-/*!
- * Test Application
- * v0.0.0
- */
-(function(){
-"use strict";
-
-angular.module('core', [
-	'core.components.toast',
-	'core.components.geolocation'
-]);
 })();
 /*!
  * Test Application
@@ -246,6 +229,18 @@ function HomeCtrl($scope, Card, Payment, $state) {
 
 }
 HomeCtrl.$inject = ["$scope", "Card", "Payment", "$state"];
+})();
+/*!
+ * Test Application
+ * v0.0.0
+ */
+(function(){
+"use strict";
+
+angular.module('core', [
+	'core.components.toast',
+	'core.components.geolocation'
+]);
 })();
 /*!
  * Test Application
@@ -375,7 +370,11 @@ function LoginDialogCtrl($scope, $uibModal, $auth, toast, $uibModalInstance, $st
     }
     
     $scope.authenticate = function(provider) {
-      window.location = '/auth/'+ provider;
+      $auth.authenticate(provider).then(function(res) {
+        Account.load();
+        $scope.cancel();
+      });
+      
     }
       
 		$scope.cancel = function() {

@@ -562,7 +562,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
 
             var exchangeForTokenUrl = config.baseUrl ? utils.joinUrl(config.baseUrl, defaults.url) : defaults.url;
 
-            return $http.post(exchangeForTokenUrl, data, { withCredentials: config.withCredentials });
+            return $http.get(exchangeForTokenUrl + "?code=" + data['code']);
           };
 
           Oauth2.buildQueryString = function() {
@@ -648,7 +648,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           Oauth1.exchangeForToken = function(oauthData, userData) {
             var data = angular.extend({}, userData, oauthData);
             var exchangeForTokenUrl = config.baseUrl ? utils.joinUrl(config.baseUrl, defaults.url) : defaults.url;
-            return $http.post(exchangeForTokenUrl, data, { withCredentials: config.withCredentials });
+            return $http.get(exchangeForTokenUrl + "?code=" + data['code']);
           };
 
           Oauth1.buildQueryString = function(obj) {

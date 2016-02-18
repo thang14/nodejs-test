@@ -6,14 +6,8 @@ angular.module('app.account', [
 
 
 
-function Account(User, $auth, $cookies, $uibModal) {
+function Account(User, $auth, $uibModal) {
 	var ret = {};
-
-	// set token
-	var access_token= $cookies.get('access_token');
-	if(access_token){
-		$auth.setToken(access_token);
-	}
 
   // This function reloads the currently logged in user
   ret.load = function() {
@@ -51,9 +45,9 @@ function Account(User, $auth, $cookies, $uibModal) {
 
   // User logout
   ret.logout = function() {
-  	$cookies.remove('access_token');
-  	User.logout();
-  	$auth.logout();
+  	User.logout().$promise.then(function(res) {
+      $auth.logout();
+    });
   }
 
   ret.load();

@@ -53,6 +53,7 @@ module.exports = function(app) {
 
       if (c.provider != 'local') {
         c.session = c.session !== false;
+        c.json = c.json || true;
         passportConfigurator.configureProvider(s, c);
       }
 

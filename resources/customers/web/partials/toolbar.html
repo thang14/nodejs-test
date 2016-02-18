@@ -1,4 +1,7 @@
 <div ng-controller="ToolbarCtrl" ng-cloak>
+  <div ng-if="isAuthenticated() && !auth.emailVerified" class="text-center">
+    Please, check your email  to activate account .
+  </div>
   <md-toolbar>
     <div class="md-toolbar-tools site-toolbar-tools">
       <div layout="row" flex class="fill-height">
