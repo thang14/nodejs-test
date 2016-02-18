@@ -53,30 +53,31 @@ module.exports = function(User) {
     //send verification email after registration
 	  UserModel.afterRemote('create', function(context, user, next) {
 	    console.log('> user.afterRemote triggered');
+      process.nextTick(function() {   
+		    var options = {
+		      type: 'email',
+		      to: user.email,
+		      from: 'thangn.1411@gmail.com',
+		      subject: 'Thanks for registering.',
+		      template: path.resolve(__dirname, '../../server/views/verify.ejs'),
+		      redirect: '/verified',
+		      user: user
+		    };
 
-	    var options = {
-	      type: 'email',
-	      to: user.email,
-	      from: 'thangn.1411@gmail.com',
-	      subject: 'Thanks for registering.',
-	      template: path.resolve(__dirname, '../../server/views/verify.ejs'),
-	      redirect: '/verified',
-	      user: user
-	    };
+		    user.verify(options, function(err, response) {
+		      if (err) return next(err);
 
-	    user.verify(options, function(err, response) {
-	      if (err) return next(err);
+		      console.log('> verification email sent:', response);
 
-	      console.log('> verification email sent:', response);
-
-	      context.res.render('response', {
-	        title: 'Signed up successfully',
-	        content: 'Please check your email and click on the verification link ' +
-	            'before logging in.',
-	        redirectTo: '/',
-	        redirectToLinkText: 'Log in'
-	      });
-	    });
+		      context.res.render('response', {
+		        title: 'Signed up successfully',
+		        content: 'Please check your email and click on the verification link ' +
+		            'before logging in.',
+		        redirectTo: '/',
+		        redirectToLinkText: 'Log in'
+		      });
+		    });
+		  });
 	  });
 
 
