@@ -15,7 +15,7 @@ angular.module('app.auth', [
     $authProvider.facebook({
       url: '/auth/facebook/callback',
       clientId: 1115887685128080,
-      redirectUri: window.location.origin + '/',
+      redirectUri: window.location.origin + '/auth',
     });
   });
     

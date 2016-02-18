@@ -168,7 +168,7 @@ angular.module('app.auth', [
     $authProvider.facebook({
       url: '/auth/facebook/callback',
       clientId: 1115887685128080,
-      redirectUri: window.location.origin + '/',
+      redirectUri: window.location.origin + '/auth',
     });
   }]);
     
@@ -193,6 +193,18 @@ function Card($resource) {
 }
 Card.$inject = ["$resource"];
 
+})();
+/*!
+ * Test Application
+ * v0.0.0
+ */
+(function(){
+"use strict";
+
+angular.module('core', [
+	'core.components.toast',
+	'core.components.geolocation'
+]);
 })();
 /*!
  * Test Application
@@ -229,18 +241,6 @@ function HomeCtrl($scope, Card, Payment, $state) {
 
 }
 HomeCtrl.$inject = ["$scope", "Card", "Payment", "$state"];
-})();
-/*!
- * Test Application
- * v0.0.0
- */
-(function(){
-"use strict";
-
-angular.module('core', [
-	'core.components.toast',
-	'core.components.geolocation'
-]);
 })();
 /*!
  * Test Application
